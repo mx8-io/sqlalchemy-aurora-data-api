@@ -9,7 +9,7 @@ import sqlalchemy.sql.sqltypes as sqltypes
 from sqlalchemy.dialects.postgresql.base import PGDialect
 from sqlalchemy.dialects.postgresql import JSON, JSONB, UUID, DATE, TIME, TIMESTAMP, ARRAY, ENUM
 from sqlalchemy.dialects.mysql.base import MySQLDialect
-
+from sqlalchemy.sql import text
 import aurora_data_api
 
 
@@ -144,7 +144,7 @@ class AuroraMySQLDataAPIDialect(MySQLDialect):
         return aurora_data_api
 
     def _detect_charset(self, connection):
-        return connection.execute("SHOW VARIABLES LIKE 'character_set_client'").fetchone()[1]
+        return connection.execute(text("SHOW VARIABLES LIKE 'character_set_client'")).fetchone()[1]
 
     def _extract_error_code(self, exception):
         return exception.args[0].value

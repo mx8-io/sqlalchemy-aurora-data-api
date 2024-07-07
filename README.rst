@@ -65,6 +65,7 @@ in the example below) are ignored.
 .. code-block:: python
 
     from sqlalchemy import create_engine
+    from sqlalchemy.sql import text
 
     cluster_arn = "arn:aws:rds:us-east-1:123456789012:cluster:my-aurora-serverless-cluster"
     secret_arn = "arn:aws:secretsmanager:us-east-1:123456789012:secret:rds-db-credentials/MY_DB"
@@ -74,7 +75,7 @@ in the example below) are ignored.
                            connect_args=dict(aurora_cluster_arn=cluster_arn, secret_arn=secret_arn))
 
     with engine.connect() as conn:
-        for result in conn.execute("select * from pg_catalog.pg_tables"):
+        for result in conn.execute(text("select * from pg_catalog.pg_tables")):
             print(result)
 
 Motivation
